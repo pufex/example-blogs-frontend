@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom"
 import { Blogs } from "./pages/Blogs"
 import { BlogForm } from "./pages/BlogForm"
 import { Link } from "react-router-dom"
+import { SingleBlog } from "./pages/SingleBlog"
 
 function App() {
   return <>
@@ -22,6 +23,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Blogs />} />
       <Route path="/create-blog" element={<BlogForm />}/>
+      <Route path="/:id" element={<SingleBlog />}/>
     </Routes>
   </>
   
