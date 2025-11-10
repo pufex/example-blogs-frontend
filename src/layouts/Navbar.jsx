@@ -3,6 +3,7 @@ import { Link, Outlet } from "react-router-dom"
 
 export function Navbar() {
     return <>
+        <div className="w-full h-20"/>
         <nav className="w-full h-20 bg-blue-600 border-b-2 border-blue-800 fixed top-0 left-0">
             <ul className="w-full mx-auto max-w-7xl px-4 py-2 h-full flex items-center space-x-6">
                 <li>
