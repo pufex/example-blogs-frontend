@@ -17,7 +17,7 @@ export function Navbar() {
                 </li>
             </ul>
         </nav>
-        <main>
+        <main className="w-full max-w-7xl mx-auto">
             <Outlet />
         </main>
     </>
