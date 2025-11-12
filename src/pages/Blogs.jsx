@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import api from "../api/axios-setup"
 import Button from "../components/Button.jsx"
-import {LoaderCircle} from "lucide-react"
+import { LoaderCircle } from "lucide-react"
 
 export function Blogs() {
 
@@ -18,7 +18,6 @@ export function Blogs() {
                 setBlogs(response.data);
             } catch (err) {
                 console.log(err)
-                console.log(response)
                 setError("We failed to fetch blogs from the database.")
             } finally {
                 setLoading(false)
@@ -28,26 +27,28 @@ export function Blogs() {
         getBlogs();
     }, [])
 
-    return <div className="w-full">
+    return <div className="w-full p-4">
         <h1 className="w-full text-center text-3xl text-black font-bold py-4">
             View all blogs.
         </h1>
         {
             loading
                 ? <div className="p-4 flex items-center justify-center">
-                    <LoaderCircle className="w-6 h-6 animate-spin text-blue-900"/>
+                    <LoaderCircle className="w-6 h-6 animate-spin text-blue-900" />
                 </div>
-                : <div className="w-full flex flex-col gap-4 lg:grid lg:grid-cols-2 lg:gap-4">
-                    {
-                        error
-                            ? <p className="py-2 text-red-600 font-semibold">
-                                {error}
-                            </p>
-                            : blogs.size == 0
-                                ? <p className="py-2 font-semibold w-full text-center text-sm">
-                                    No blogs to display
-                                </p>
-                                : blogs.map((blog, index) => (
+                :
+                error
+                    ? <p className="w-full py-2 text-red-600 font-semibold text-center">
+                        {error}
+                    </p>
+                    : blogs.size == 0
+                        ? <p className="py-2 font-semibold w-full text-center text-sm">
+                            No blogs to display
+                        </p>
+                        : <div className="w-full flex flex-col gap-4 lg:grid lg:grid-cols-2 lg:gap-4">
+
+                            {
+                                blogs.map((blog, index) => (
                                     <div className="w-full border-2 border-black/10 p-4 rounded-lg" key={index}>
                                         <h1 className="text-nowrap w-full overflow-hidden text-2xl font-semibold text-black pb-4">
                                             {blog.title}
@@ -60,8 +61,10 @@ export function Blogs() {
                                         </Button>
                                     </div>
                                 ))
-                    }
-                </div>
+                            }
+                        </div>
+
+
         }
 
     </div>
