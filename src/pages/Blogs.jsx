@@ -21,7 +21,7 @@ export function Blogs (){
         getBlogs();
     }, [])
 
-    return <h1>
-        All Blogs page
-    </h1>
+    return <div>
+        
+    </div>
 }
