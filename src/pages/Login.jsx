@@ -23,7 +23,7 @@ export default function Login() {
         </h1>
         {
             errors.root && <p className="text-red-500 font-semibold text-lg text-center my-3">
-                Failed to login
+                {errors.root.message}
             </p>
         }
         <div className="w-full flex flex-col gap-2 mb-4">
