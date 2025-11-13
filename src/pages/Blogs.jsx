@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 import api from "../api/axios-setup"
 import Button from "../components/Button.jsx"
-import { LoaderCircle, Trash, Trash2 } from "lucide-react"
+import { LoaderCircle } from "lucide-react"
 import DeleteBlogButton from "../components/DeleteBlogButton.jsx"
 
 export function Blogs() {
@@ -17,6 +17,7 @@ export function Blogs() {
             try {
                 const response = await api.get("/blogs");
                 setBlogs(response.data);
+                console.log(response.data)
             } catch (err) {
                 console.log(err)
                 setError("We failed to fetch blogs from the database.")
@@ -29,7 +30,7 @@ export function Blogs() {
     }, [])
 
     const removeBlogById = useCallback((blog_id) => {
-        setBlogs(blogs => [...blogs.filter(({id}) => blog_id != id)])
+        setBlogs(blogs => [...blogs.filter(({_id}) => blog_id != _id )])
     }, [])
 
     return <div className="w-full p-4">
@@ -60,7 +61,7 @@ export function Blogs() {
                                                 {blog.title}
                                             </h1>
                                             <DeleteBlogButton 
-                                                blog_id={blog.id} 
+                                                blog_id={blog._id} 
                                                 removeBlogById={removeBlogById}
                                             />
                                         </div>
@@ -68,7 +69,7 @@ export function Blogs() {
                                             {blog.content}
                                         </p>
                                         <div className="w-full flex justify-end">
-                                            <Button onClick={() => navigate(`/${blog.id}`)}>
+                                            <Button onClick={() => navigate(`/${blog._id}`)}>
                                                 View blog
                                             </Button>
                                         </div>

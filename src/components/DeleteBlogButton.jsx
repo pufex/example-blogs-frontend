@@ -10,7 +10,7 @@ export default function DeleteBlogButton({ blog_id, removeBlogById }) {
     const handleButtonClick = async () => {
         try{
             setLoading(true)
-            const result = api.delete(`/blogs/${blog_id}`)
+            const result = await api.delete(`/blogs/${blog_id}`)
             removeBlogById(blog_id)
         }catch(err){
             console.log(err)
