@@ -8,12 +8,7 @@ import api from "../api/axios-setup"
 export function BlogForm() {
 
     const navigate = useNavigate()
-    const { register, handleSubmit, formState: { errors }, setError } = useForm({
-        defaultValues: {
-            title: "I didn't not sleep with your mother",
-            content: "Eghh em."
-        }
-    });
+    const { register, handleSubmit, formState: { errors }, setError } = useForm();
 
     const [loading, setLoading] = useState(false)
 
