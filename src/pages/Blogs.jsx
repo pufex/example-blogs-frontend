@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import api from "../api/axios-setup"
 import Button from "../components/Button.jsx"
-import { LoaderCircle } from "lucide-react"
+import { LoaderCircle, Trash, Trash2 } from "lucide-react"
 
 export function Blogs() {
 
@@ -28,7 +28,7 @@ export function Blogs() {
     }, [])
 
     return <div className="w-full p-4">
-        <h1 className="w-full text-center text-3xl text-black font-bold py-4">
+        <h1 className="w-full text-center text-3xl text-black font-bold py-4 mb-10">
             View all blogs.
         </h1>
         {
@@ -50,15 +50,24 @@ export function Blogs() {
                             {
                                 blogs.map((blog, index) => (
                                     <div className="w-full border-2 border-black/10 p-4 rounded-lg" key={index}>
-                                        <h1 className="text-nowrap w-full overflow-hidden text-2xl font-semibold text-black pb-4">
-                                            {blog.title}
-                                        </h1>
-                                        <p className="text-[1.25rem] font-medium text-left">
+                                        <div className="flex justify-between items-center">
+                                            <h1 className="text-nowrap w-full overflow-hidden text-2xl font-semibold text-black pb-4">
+                                                {blog.title}
+                                            </h1>
+                                            <button 
+                                                className="cursor-pointer w-8 h-8 flex items-center justify-center bg-red-700 border border-red-900 rounded-md transform hover:bg-red-500 hover:scale-105 active:bg-red-400 active:scale-95"
+                                            >
+                                                <Trash2 className="text-white w-5 h-5"/>
+                                            </button>
+                                        </div>
+                                        <p className="text-left text-xl mb-4">
                                             {blog.content}
                                         </p>
-                                        <Button onClick={() => navigate(`/${blog.id}`)}>
-                                            View blog
-                                        </Button>
+                                        <div className="w-full flex justify-end">
+                                            <Button onClick={() => navigate(`/${blog.id}`)}>
+                                                View blog
+                                            </Button>
+                                        </div>
                                     </div>
                                 ))
                             }
