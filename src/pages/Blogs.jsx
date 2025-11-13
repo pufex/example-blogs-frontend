@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import api from "../api/axios-setup"
 import Button from "../components/Button.jsx"
 import { LoaderCircle, Trash, Trash2 } from "lucide-react"
+import DeleteBlogButton from "../components/DeleteBlogButton.jsx"
 
 export function Blogs() {
 
@@ -54,11 +55,7 @@ export function Blogs() {
                                             <h1 className="text-nowrap w-full overflow-hidden text-2xl font-semibold text-black pb-4">
                                                 {blog.title}
                                             </h1>
-                                            <button 
-                                                className="cursor-pointer w-8 h-8 flex items-center justify-center bg-red-700 border border-red-900 rounded-md transform hover:bg-red-500 hover:scale-105 active:bg-red-400 active:scale-95"
-                                            >
-                                                <Trash2 className="text-white w-5 h-5"/>
-                                            </button>
+                                            <DeleteBlogButton />
                                         </div>
                                         <p className="text-left text-xl mb-4">
                                             {blog.content}
