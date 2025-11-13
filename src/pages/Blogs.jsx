@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 import api from "../api/axios-setup"
 import Button from "../components/Button.jsx"
 import { LoaderCircle } from "lucide-react"
+import DeleteBlogButton from "../components/DeleteBlogButton.jsx"
 
 export function Blogs() {
 
@@ -16,6 +17,7 @@ export function Blogs() {
             try {
                 const response = await api.get("/blogs");
                 setBlogs(response.data);
+                console.log(response.data)
             } catch (err) {
                 console.log(err)
                 setError("We failed to fetch blogs from the database.")
@@ -27,8 +29,12 @@ export function Blogs() {
         getBlogs();
     }, [])
 
+    const removeBlogById = useCallback((blog_id) => {
+        setBlogs(blogs => [...blogs.filter(({_id}) => blog_id != _id )])
+    }, [])
+
     return <div className="w-full p-4">
-        <h1 className="w-full text-center text-3xl text-black font-bold py-4">
+        <h1 className="w-full text-center text-3xl text-black font-bold py-4 mb-10">
             View all blogs.
         </h1>
         {
@@ -50,15 +56,23 @@ export function Blogs() {
                             {
                                 blogs.map((blog, index) => (
                                     <div className="w-full border-2 border-black/10 p-4 rounded-lg" key={index}>
-                                        <h1 className="text-nowrap w-full overflow-hidden text-2xl font-semibold text-black pb-4">
-                                            {blog.title}
-                                        </h1>
-                                        <p className="text-[1.25rem] font-medium text-left">
+                                        <div className="flex justify-between items-center">
+                                            <h1 className="text-nowrap w-full overflow-hidden text-2xl font-semibold text-black pb-4">
+                                                {blog.title}
+                                            </h1>
+                                            <DeleteBlogButton 
+                                                blog_id={blog._id} 
+                                                removeBlogById={removeBlogById}
+                                            />
+                                        </div>
+                                        <p className="text-left text-xl mb-4">
                                             {blog.content}
                                         </p>
-                                        <Button onClick={() => navigate(`/${blog.id}`)}>
-                                            View blog
-                                        </Button>
+                                        <div className="w-full flex justify-end">
+                                            <Button onClick={() => navigate(`/${blog._id}`)}>
+                                                View blog
+                                            </Button>
+                                        </div>
                                     </div>
                                 ))
                             }
