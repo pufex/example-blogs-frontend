@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { LoaderCircle } from "lucide-react";
 import api from "../api/axios-setup"
+import Button from "../components/Button";
 
 
 export function SingleBlog() {
@@ -16,7 +17,8 @@ export function SingleBlog() {
     useEffect(() => {
         const getBlogById = async () => {
             try {
-                const response = api.get(`/blogs/${blog_id}`)
+                setLoading(true)
+                const response = await api.get(`/blogs/${blog_id}`)
                 setBlog(response.data)
             } catch (err) {
                 console.log(err)
