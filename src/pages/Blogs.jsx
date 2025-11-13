@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import { useNavigate } from "react-router-dom"
 import api from "../api/axios-setup"
 import Button from "../components/Button.jsx"
@@ -28,6 +28,10 @@ export function Blogs() {
         getBlogs();
     }, [])
 
+    const removeBlogById = useCallback((blog_id) => {
+        setBlogs(blogs => [...blogs.filter(({id}) => blog_id != id)])
+    }, [])
+
     return <div className="w-full p-4">
         <h1 className="w-full text-center text-3xl text-black font-bold py-4 mb-10">
             View all blogs.
@@ -55,7 +59,10 @@ export function Blogs() {
                                             <h1 className="text-nowrap w-full overflow-hidden text-2xl font-semibold text-black pb-4">
                                                 {blog.title}
                                             </h1>
-                                            <DeleteBlogButton />
+                                            <DeleteBlogButton 
+                                                blog_id={blog.id} 
+                                                removeBlogById={removeBlogById}
+                                            />
                                         </div>
                                         <p className="text-left text-xl mb-4">
                                             {blog.content}
