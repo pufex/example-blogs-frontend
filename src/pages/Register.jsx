@@ -1,8 +1,13 @@
 import Button from "../components/Button";
 import { useForm } from "react-hook-form"
-
+import { useAuth } from "../contexts/AuthProvider";
+import { LoaderCircle } from "lucide-react";
+import { useState } from "react";
 
 export default function Register() {
+
+    const [loading, setLoading] = useState(false)
+    const {register: registerUser} = useAuth();
 
     const {
         register,
@@ -12,8 +17,15 @@ export default function Register() {
         getValues
     } = useForm()
 
-    const onSubmit = (data) => {
-        console.log(data)
+    const onSubmit = async (data) => {
+        try{
+            setLoading(true)
+            await registerUser(data);
+        }catch(err){
+            setError("Failed to register you.")
+        }finally{
+            setLoading(false)
+        }
     }
 
     return <form 
@@ -105,8 +117,15 @@ export default function Register() {
                 })}
             />
         </div>
-        <Button type="submit" className="w-full justify-center">
-            Create account
+        <Button type="submit" className="w-full justify-center" disabled={loading}>
+                {
+                    !loading
+                        ? "Create Account"
+                        : <>
+                            Creating...
+                            <LoaderCircle  className="text-white w-5 h-5 animate-spin"/>
+                        </>
+                }
         </Button>
     </form>
 }

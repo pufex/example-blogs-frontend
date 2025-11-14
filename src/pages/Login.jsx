@@ -1,7 +1,13 @@
 import Button from "../components/Button"
+import { useState } from "react";
 import { useForm } from "react-hook-form"
+import { useAuth } from "../contexts/AuthProvider"
+import { LoaderCircle } from "lucide-react";
 
 export default function Login() {
+
+    const { login } = useAuth();
+    const [loading, setLoading] = useState(false)
 
     const { 
         register, 
@@ -10,8 +16,16 @@ export default function Login() {
         setError
     } = useForm()
 
-    const onSubmit = (data) => {
-        console.log(data)
+    const onSubmit = async (data) => {
+        try{
+            setLoading(true)
+            await login(data);
+        }catch(err){
+            console.log(err);
+            setError("Failed to login")
+        }finally{
+            setLoading(false)
+        }
     }
 
     return <form 
@@ -90,8 +104,15 @@ export default function Login() {
                 })}
             />
         </div>
-        <Button type="submit" className="w-full justify-center">
-            Login now
+        <Button type="submit" className="w-full justify-center" disabled={loading}>
+            {
+                !loading
+                    ? "Login now"
+                    : <>
+                        Logging in
+                        <LoaderCircle  className="text-white w-5 h-5 animate-spin"/>
+                    </>
+            } 
         </Button>
     </form>
 }
