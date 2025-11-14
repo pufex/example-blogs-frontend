@@ -1,11 +1,15 @@
 import { useEffect, useState, useCallback } from "react"
 import { useNavigate } from "react-router-dom"
+import { useAuth } from "../contexts/AuthProvider.jsx"
 import api from "../api/axios-setup"
 import Button from "../components/Button.jsx"
 import { LoaderCircle } from "lucide-react"
 import DeleteBlogButton from "../components/DeleteBlogButton.jsx"
+import AuthOnly from "../components/AuthOnly.jsx"
 
 export function Blogs() {
+
+    const {auth} = useAuth();
 
     const navigate = useNavigate();
     const [blogs, setBlogs] = useState([])
@@ -60,10 +64,14 @@ export function Blogs() {
                                             <h1 className="text-nowrap w-full overflow-hidden text-2xl font-semibold text-black pb-4">
                                                 {blog.title}
                                             </h1>
-                                            <DeleteBlogButton 
-                                                blog_id={blog._id} 
-                                                removeBlogById={removeBlogById}
-                                            />
+                                            <AuthOnly>
+                                                {
+                                                    blog.user_id == auth?.user._id && <DeleteBlogButton 
+                                                        blog_id={blog._id} 
+                                                        removeBlogById={removeBlogById}
+                                                    />
+                                                }
+                                            </AuthOnly>
                                         </div>
                                         <p className="text-left text-xl mb-4">
                                             {blog.content}
