@@ -1,6 +1,7 @@
 import { Link, Outlet } from "react-router-dom"
 import AuthOnly from "../components/AuthOnly"
 import LoggedOutOnly from "../components/LoggedOutOnly"
+import LogoutButton from "../components/LogoutButton"
 
 
 export function Navbar() {
@@ -18,6 +19,9 @@ export function Navbar() {
                         <Link to="/create-blog" className="block text-xl text-white font-semibold transform hover:bg-blue-500 px-2 py-1 rounded-lg active:bg-blue-400">
                             New blog
                         </Link>
+                    </li>
+                    <li>
+                        <LogoutButton />
                     </li>
                 </AuthOnly>
             </ul>

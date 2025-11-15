@@ -51,6 +51,15 @@ export const AuthProvider = ({children}) => {
         }
     })
 
+    const logout = useCallback(async () => {
+        try{
+            await api.get("/auth/logout", { withCredentials: true})
+            setAuth(null)
+        }catch(err){
+            console.log(err)
+        }
+    }, [])
+
     useEffect(() => {
         const initialLoad = async () => {
             try{
@@ -65,7 +74,7 @@ export const AuthProvider = ({children}) => {
         initialLoad();
     }, [])
     
-    return <AuthContext.Provider value={{auth, login, register, refresh}}>
+    return <AuthContext.Provider value={{auth, login, register, refresh, logout}}>
         {
             loading
                 ? <div className="w-full min-h-screen fixed z-50 bg-slate-200 flex items-center justify-center">
