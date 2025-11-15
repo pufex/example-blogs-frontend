@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom"
 import Button from "../components/Button"
 import { useForm } from "react-hook-form"
 import { LoaderCircle } from "lucide-react"
-import api from "../api/axios-setup"
+import { useAxiosPrivate } from "../hooks/useAxiosPrivate"
 
 export function BlogForm() {
 
     const navigate = useNavigate()
+    const axiosPrivate = useAxiosPrivate()
     const { register, handleSubmit, formState: { errors }, setError } = useForm();
 
     const [loading, setLoading] = useState(false)
@@ -16,7 +17,9 @@ export function BlogForm() {
         
         try {
             setLoading(true)
-            await api.post("/blogs", { ...data });
+            await axiosPrivate.post("/blogs", { ...data }, {
+                baseURL: "http://localhost:3000"
+            });
 
             navigate("/")
         } catch (err) {
