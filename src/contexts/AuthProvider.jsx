@@ -35,7 +35,21 @@ export const AuthProvider = ({children}) => {
         }
     }, [])
 
-    return <AuthContext.Provider value={{auth, login, register}}>
+    const refresh = useCallback(async () => {
+        try{
+            const response = await api.get("/auth/refresh-token", {
+                withCredentials: true
+            })
+            setAuth(response.data)
+            console.log(response.data)
+            return response.data.accessToken
+        }catch(err){
+            console.log(err)
+            return null
+        }
+    })
+
+    return <AuthContext.Provider value={{auth, login, register, refresh}}>
         {children}
     </AuthContext.Provider>
 }
