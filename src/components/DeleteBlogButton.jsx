@@ -1,16 +1,16 @@
 import { LoaderCircle, Trash2 } from "lucide-react";
 import { useState } from "react";
-import api from "../api/axios-setup"
-
+import { useAxiosPrivate } from "../hooks/useAxiosPrivate";
 
 export default function DeleteBlogButton({ blog_id, removeBlogById }) {
 
     const [loading, setLoading] = useState(false)
+    const axiosPrivate = useAxiosPrivate();
 
     const handleButtonClick = async () => {
         try{
             setLoading(true)
-            const result = await api.delete(`/blogs/${blog_id}`)
+            await axiosPrivate.delete(`/blogs/${blog_id}`)
             removeBlogById(blog_id)
         }catch(err){
             console.log(err)
